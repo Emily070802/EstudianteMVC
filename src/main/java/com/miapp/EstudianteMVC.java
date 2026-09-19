@@ -12,11 +12,14 @@ import com.miapp.controlador.EstudianteController;
  */
 public class EstudianteMVC {
     public static void main(String[] args) {
-        // Lanza la Vista en el hilo de Swing (buena práctica)
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            EstudianteView vista = new EstudianteView();
-            new EstudianteController(vista);   // el controlador conecta todo
-            vista.setVisible(true);
-        });
+  
+        EstudianteView vista = new EstudianteView();
+    EstudianteController controlador = new EstudianteController(vista);
+    
+    controlador.mostrarTodos(); 
+    
+    vista.setVisible(true);
     }
+    
+    
 }

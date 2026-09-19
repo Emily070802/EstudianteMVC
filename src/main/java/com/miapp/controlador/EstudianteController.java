@@ -25,6 +25,7 @@ public class EstudianteController {
     private ArrayList<Estudiante> estudiantes;
     private List<Estudiante>ultimosResultados = new ArrayList<>();
     private boolean ordenAscendente = true;
+  
     
 
     // ── Constructor ───────────────────────────────────────────────────────────

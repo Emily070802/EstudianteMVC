@@ -20,11 +20,14 @@ import java.util.List;
 public class EstudianteView extends JFrame {
 
     // ── Componentes UI ────────────────────────────────────────────────────────
-    private JTextField             txtNombre;
-    private JButton                btnBuscar;
-    private JTable                 tblResultados;
-    private DefaultTableModel      modeloTabla;
-    private JLabel                 lblEstado;
+   private JTextField txtNombre;
+private JTextField txtCarrera;
+private JTextField txtPromedio;
+private JButton btnBuscar;
+private JButton btnAgregar;
+private JTable tblResultados;
+private DefaultTableModel modeloTabla;
+private JLabel lblEstado;
 
     // ── Controlador ───────────────────────────────────────────────────────────
     private EstudianteController controlador;
@@ -50,8 +53,13 @@ public class EstudianteView extends JFrame {
         panelBusqueda.setBorder(BorderFactory.createTitledBorder("Buscar estudiante"));
 
         JLabel lblNombre = new JLabel("Nombre:");
-        txtNombre = new JTextField(25);
+        txtNombre = new JTextField(15);
+        JLabel lblCarrera = new JLabel("Carrera:");
+        txtCarrera = new JTextField(15);
+        JLabel lblPromedio = new JLabel("Promedio:");
+        txtPromedio = new JTextField(5);
         btnBuscar = new JButton("Buscar");
+        btnAgregar = new JButton("Agregar");
         btnBuscar.setBackground(new Color(59, 139, 212));
         btnBuscar.setForeground(Color.WHITE);
         btnBuscar.setFocusPainted(false);
@@ -59,6 +67,11 @@ public class EstudianteView extends JFrame {
         panelBusqueda.add(lblNombre);
         panelBusqueda.add(txtNombre);
         panelBusqueda.add(btnBuscar);
+        panelBusqueda.add(lblCarrera);
+        panelBusqueda.add(txtCarrera);
+        panelBusqueda.add(lblPromedio);
+        panelBusqueda.add(txtPromedio);
+        panelBusqueda.add(btnAgregar);
 
         // Panel central — tabla de resultados
         String[] columnas = {"ID", "Nombre", "Carrera", "Promedio"};
@@ -92,7 +105,28 @@ public class EstudianteView extends JFrame {
                 controlador.buscarEstudiante(txtNombre.getText().trim());
             }
         });
+        
+        btnAgregar.addActionListener((ActionEvent e) -> {
 
+    if (controlador != null) {
+
+        try {
+            double promedio = Double.parseDouble(
+                    txtPromedio.getText().trim()
+            );
+
+            controlador.agregarEstudiante(
+                    txtNombre.getText().trim(),
+                    txtCarrera.getText().trim(),
+                    promedio
+            );
+
+        } catch (NumberFormatException ex) {
+            mostrarError("El promedio debe ser un número.");
+        }
+    }
+});
+        
         // También buscar al presionar Enter en el campo de texto
         txtNombre.addActionListener((ActionEvent e) -> btnBuscar.doClick());
     }
@@ -162,4 +196,13 @@ public class EstudianteView extends JFrame {
     private void setEstado(String texto) {
         lblEstado.setText(texto);
     }
+
+   public void mostrarConfirmacion(String mensaje) {
+    JOptionPane.showMessageDialog(
+        this,
+        mensaje,
+        "Confirmación",
+        JOptionPane.INFORMATION_MESSAGE
+    );
+}
 }
